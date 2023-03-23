@@ -7,17 +7,22 @@ int main(){
         lista.add(i);
     }
 
-    int valueFind = 3;
+    lista.showAll();
+    cout << "List size: " << lista.getSize() << endl << endl;
 
-    cout << "find() retorna -1 valor não existe na lista" << endl;
-    cout << "Valor " << valueFind << ", idx: " << lista.find(valueFind) << endl << endl;
+    int idxFind = 5;
+    cout << "A posição " << idxFind << " contém o valor: " << lista.find(idxFind) << endl << endl;
+
+    int idxRemove = 8;
+    cout << "Remove posicao: " << idxRemove << endl; 
+    lista.remove(idxRemove);
 
     lista.showAll();
     cout << "List size: " << lista.getSize() << endl << endl;
 
-    int idxRemove = 8;
-    cout << "Remove posicao: " << idxRemove << endl; 
-    lista.remove(8);
+    int idxInsere = 0;
+    cout << "Insera na posicao: " << idxInsere << endl;
+    lista.addAt(99, idxInsere);
 
     lista.showAll();
     cout << "List size: " << lista.getSize() << endl;

@@ -15,7 +15,8 @@ class List{
         List();
         int getSize();
         void add(T value);
-        int find(T idx);
+        void addAt(T value, int idx);
+        T find(int idx);
         void remove(int idx);
         void showAll();
 };
@@ -46,6 +47,41 @@ void List<T>::add(T value){
     this->size++;
 }
 
+//Adiciona um novo Nó na posição idx da lista
+template <typename T>
+void List<T>::addAt(T value, int idx){
+    Node<T> *newNode = new Node<T>(value);
+
+    if(!this->head && idx == 0){
+        this->head = newNode;
+        this->size++;
+        return;
+    }
+
+    if((this->size - 1) < idx){
+        throw std::out_of_range ("Posição não existe na lista");
+    }
+
+    if(idx == 0){
+        newNode->setNext(this->head);
+        this->head = newNode;
+        this->size++;
+        return;
+    }
+
+    Node<T> *temp1 = this->head;
+    Node<T> *temp2 = nullptr;
+    int i = 0;
+    while(temp1 && i++ < idx){
+        temp2 = temp1;
+        temp1 = temp1->getNext();
+    }
+
+    temp2->setNext(newNode);
+    newNode->setNext(temp1);
+    this->size++;
+}
+
 //Imprime todos os valores da lista
 template <typename T>
 void List<T>::showAll(){
@@ -60,10 +96,10 @@ void List<T>::showAll(){
     cout << endl;
 }
 
-//Recebe um valot T como parâmtro e o procura na lista caso encontre-o retorna o seu idx
-//caso não encontre retorna -1
+//Recebe o índece como parâmtro e o procura na lista caso encontre-o 
+//retorna o valor nessa posição
 template <typename T>
-int List<T>::find(T value){
+T List<T>::find(int idx){
     Node<T> *temp = this->head;
     int i = 0;
 
@@ -71,19 +107,27 @@ int List<T>::find(T value){
         throw std::out_of_range ("Lista está vazia");
     }
 
-    while(temp && temp->getValue() != value){
+    if(this->size < idx){
+        throw std::out_of_range ("Posição não existe na lista");
+    }
+
+    while(temp && i < idx){
         temp = temp->getNext();
         i++;
     }
 
-    return temp ? i : -1;
+    return temp->getValue();
 }
 
 //Apaga o Nó na posição idx passada
 template <typename T>
 void List<T>::remove(int idx){
-    if(this->size == 0 || this->size < idx){
-        throw std::out_of_range ("Tá grande de mais esse número maluco");
+    if(!this->head){
+        throw std::out_of_range ("Lista está vazia");
+    }
+
+    if(this->size < idx){
+        throw std::out_of_range ("Posição não existe na lista");
     }
 
     if(this->size == 1){
