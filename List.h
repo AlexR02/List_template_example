@@ -96,7 +96,7 @@ void List<T>::showAll(){
     cout << endl;
 }
 
-//Recebe o índece como parâmtro e o procura na lista caso encontre-o 
+//Recebe o índice como parâmetro e o procura na lista caso encontre-o 
 //retorna o valor nessa posição
 template <typename T>
 T List<T>::find(int idx){
